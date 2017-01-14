@@ -7,11 +7,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace AzureWebApp
 {
     public class Startup
     {
+        private ILogger logger;
+        private StreamReader arquivo;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -37,15 +41,23 @@ namespace AzureWebApp
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            logger = loggerFactory.CreateLogger("App");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            else
+
+            try
             {
-                app.UseExceptionHandler("/Home/Error");
+                arquivo = new StreamReader(File.OpenRead("D:\\required_file.txt"));
             }
+            catch (Exception ex)
+            {
+                logger.LogError(new EventId(), ex, $"Erro carregando arquivo");
+            }
+            string content = arquivo.ReadToEnd();
 
             app.UseStaticFiles();
 
