@@ -51,7 +51,7 @@ namespace AzureWebApp
 
             try
             {
-                arquivo = new StreamReader(File.OpenRead("D:\\required_file.txt"));
+                arquivo = new StreamReader(File.OpenRead(Configuration["ConfigFile"]));
             }
             catch (Exception ex)
             {
