@@ -60,12 +60,14 @@ namespace AzureWebApp
             try
             {
                 arquivo = new StreamReader(File.OpenRead("required_file.txt"));
+                logger.LogInformation("Arquivo carregado com sucesso");
             }
             catch (Exception ex)
             {
                 app.UseExceptionHandler("/Home/Error");
             }
             string content = arquivo.ReadToEnd();
+            logger.LogInformation("Arquivo lido com sucesso");
 
             app.UseStaticFiles();
 

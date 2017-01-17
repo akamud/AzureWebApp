@@ -1,7 +1,17 @@
 ﻿@{
     ViewData["Title"] = "About";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+@if (ViewBag.Erro == true)
+{
+    <h2>@ViewData["Title"].</h2>
+
+    <p style="color: #FF0000;">Erro!</p>
+}
+else
+{
+    <h2>@ViewData["Title"].</h2>
+    <h3>@ViewData["Message"]</h3>
+
+    <p>Use this area to provide additional information.</p>
+}

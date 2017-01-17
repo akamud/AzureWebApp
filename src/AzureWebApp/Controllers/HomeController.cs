@@ -12,25 +12,30 @@ namespace AzureWebApp.Controllers
         private readonly BloggingContext context;
         private readonly ILogger logger;
 
-        public HomeController(BloggingContext context, ILoggerFactory loggerFactory)
+        public HomeController(BloggingContext context, ILogger<Startup> logger)
         {
             this.context = context;
-            logger = loggerFactory.CreateLogger<Startup>();
+            this.logger = logger;
         }
 
         public IActionResult Index()
         {
+            logger.LogInformation("Página inicial");
             return View();
         }
 
         public IActionResult About()
         {
+            logger.LogInformation("Página About");
+
             try
             {
+                logger.LogInformation("Buscando por Blogs");
                 var blog = context.Blogs.First(x => x.Titulo == "Titulo");
             }
             catch (Exception ex)
             {
+                ViewBag.Erro = true;
                 logger.LogError(new EventId(), "Erro na busca do blog", ex);
             }
 
@@ -41,6 +46,7 @@ namespace AzureWebApp.Controllers
 
         public IActionResult Contact()
         {
+            logger.LogInformation("Página de contatos");
             ViewData["Message"] = "Your contact page.";
 
             return View();
