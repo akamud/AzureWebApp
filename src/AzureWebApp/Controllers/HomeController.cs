@@ -20,6 +20,11 @@ namespace AzureWebApp.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult About()
+        {
             try
             {
                 var blog = context.Blogs.First(x => x.Titulo == "Titulo");
@@ -29,11 +34,6 @@ namespace AzureWebApp.Controllers
                 logger.LogError(new EventId(), "Erro na busca do blog", ex);
             }
 
-            return View();
-        }
-
-        public IActionResult About()
-        {
             ViewData["Message"] = "Your application description page.";
 
             return View();
